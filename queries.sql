@@ -1,74 +1,96 @@
--- =====================================
--- SQL Queries for Airline Analysis Project
--- =====================================
+-- =========================
+-- UPDATED ANALYTIC QUERIES
+-- =========================
 
--- 1. Количество полётов каждого пассажира
-SELECT p.name, COUNT(*) AS flights
-FROM Passenger p
-JOIN Pass_in_trip pit ON p.id = pit.passenger
-GROUP BY p.name
-ORDER BY flights DESC;
+-- 1. Количество рейсов для каждого пассажира
+SELECT p.name, COUNT(*) AS flight_count
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+GROUP BY p.id, p.name
+ORDER BY flight_count DESC;
 
--- 2. Самые популярные направления (по количеству пассажиров)
-SELECT t.town_to, COUNT(pit.passenger) AS passengers
-FROM Trip t
-JOIN Pass_in_trip pit ON t.id = pit.trip
+-- 2. Популярные направления (город назначения)
+SELECT t.town_to, COUNT(*) AS passengers_count
+FROM Pass_in_trip pit
+JOIN Trip t ON pit.trip = t.id
 GROUP BY t.town_to
-ORDER BY passengers DESC;
+ORDER BY passengers_count DESC;
 
--- 3. Пассажиры, которые летали больше одного раза
+-- 3. Пассажиры с более чем 1 рейсом
 SELECT p.name, COUNT(*) AS flights
-FROM Passenger p
-JOIN Pass_in_trip pit ON p.id = pit.passenger
-GROUP BY p.name
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+GROUP BY p.id, p.name
 HAVING COUNT(*) > 1;
 
 -- 4. Количество пассажиров на каждом рейсе
-SELECT t.id, t.town_from, t.town_to, COUNT(pit.passenger) AS passengers
-FROM Trip t
-JOIN Pass_in_trip pit ON t.id = pit.trip
-GROUP BY t.id, t.town_from, t.town_to
-ORDER BY passengers DESC;
-
--- 5. Из каких городов больше всего вылетов
-SELECT town_from, COUNT(*) AS flights
-FROM Trip
-GROUP BY town_from
-ORDER BY flights DESC;
-
--- 6. Все полёты с именами пассажиров
-SELECT p.name, t.town_from, t.town_to, pit.date
-FROM Passenger p
-JOIN Pass_in_trip pit ON p.id = pit.passenger
+SELECT t.id AS trip_id, t.town_from, t.town_to, COUNT(*) AS passenger_count
+FROM Pass_in_trip pit
 JOIN Trip t ON pit.trip = t.id
+GROUP BY t.id, t.town_from, t.town_to
+ORDER BY passenger_count DESC;
+
+-- 5. Полная история рейсов конкретного пассажира
+-- Пример: Kylian Mbappe
+SELECT p.name, t.town_from, t.town_to, pit.date, pit.seat_number, pit.ticket_class, pit.price
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+JOIN Trip t ON pit.trip = t.id
+WHERE p.name = 'Kylian Mbappe'
 ORDER BY pit.date;
 
--- 7. Рейсы, где летал Мбаппе
-SELECT t.town_from, t.town_to, pit.date
-FROM Passenger p
-JOIN Pass_in_trip pit ON p.id = pit.passenger
-JOIN Trip t ON pit.trip = t.id
-WHERE p.name = 'Kylian Mbappe';
-
--- 8. Пассажиры, которые летали в Париж
-SELECT p.name, t.date
-FROM Passenger p
-JOIN Pass_in_trip pit ON p.id = pit.passenger
+-- 6. Пассажиры, летавшие в конкретный город
+-- Пример: Paris
+SELECT DISTINCT p.name
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
 JOIN Trip t ON pit.trip = t.id
 WHERE t.town_to = 'Paris';
 
--- 9. Сколько рейсов в каждый город делал каждый пассажир
-SELECT p.name, t.town_to, COUNT(*) AS flights
-FROM Passenger p
-JOIN Pass_in_trip pit ON p.id = pit.passenger
-JOIN Trip t ON pit.trip = t.id
-GROUP BY p.name, t.town_to
-ORDER BY p.name, flights DESC;
-
--- 10. Пассажиры, которые летали одновременно на одном рейсе (совпадения)
-SELECT t.id AS trip_id, t.town_from, t.town_to, GROUP_CONCAT(p.name) AS passengers
-FROM Trip t
-JOIN Pass_in_trip pit ON t.id = pit.trip
+-- 7. Количество рейсов по городам и класс билета для каждого пассажира
+SELECT p.name, t.town_to, pit.ticket_class, COUNT(*) AS flights_to_city
+FROM Pass_in_trip pit
 JOIN Passenger p ON pit.passenger = p.id
-GROUP BY t.id, t.town_from, t.town_to
-HAVING COUNT(p.id) > 1;
+JOIN Trip t ON pit.trip = t.id
+GROUP BY p.id, t.town_to, pit.ticket_class
+ORDER BY p.name, flights_to_city DESC;
+
+-- 8. Пассажиры, летавшие вместе на одном рейсе
+SELECT t.id AS trip_id, t.town_from, t.town_to,
+       GROUP_CONCAT(p.name ORDER BY p.name SEPARATOR ', ') AS passengers,
+       t.flight_number, t.airline
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+JOIN Trip t ON pit.trip = t.id
+GROUP BY t.id, t.town_from, t.town_to, t.flight_number, t.airline
+ORDER BY t.id;
+
+-- 9. Топ 5 самых дорогих билетов и пассажиры
+SELECT p.name, t.town_from, t.town_to, pit.price, pit.ticket_class, t.airline
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+JOIN Trip t ON pit.trip = t.id
+ORDER BY pit.price DESC
+LIMIT 5;
+
+-- 10. Средняя стоимость билета по направлениям
+SELECT t.town_from, t.town_to, AVG(pit.price) AS avg_price
+FROM Pass_in_trip pit
+JOIN Trip t ON pit.trip = t.id
+GROUP BY t.town_from, t.town_to
+ORDER BY avg_price DESC;
+
+-- 11. Список всех пассажиров с их страной и количеством рейсов
+SELECT p.name, p.country, COUNT(*) AS flights_count
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+GROUP BY p.id, p.name, p.country
+ORDER BY flights_count DESC;
+
+-- 12. Рейсы и пассажиры бизнес-класса
+SELECT t.town_from, t.town_to, p.name, pit.seat_number, pit.price
+FROM Pass_in_trip pit
+JOIN Passenger p ON pit.passenger = p.id
+JOIN Trip t ON pit.trip = t.id
+WHERE pit.ticket_class = 'Business'
+ORDER BY t.town_to, p.name;
