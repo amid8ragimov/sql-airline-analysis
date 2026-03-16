@@ -2,41 +2,42 @@
 -- DATABASE SCHEMA + DATA
 -- =========================
 
--- Таблица пассажиров
 CREATE TABLE Passenger (
     id INT PRIMARY KEY,
-    name VARCHAR(50)
+    name VARCHAR(50) NOT NULL
 );
 
--- Таблица рейсов
 CREATE TABLE Trip (
     id INT PRIMARY KEY,
-    town_from VARCHAR(50),
-    town_to VARCHAR(50)
+    town_from VARCHAR(50) NOT NULL,
+    town_to VARCHAR(50) NOT NULL
 );
 
--- Таблица полётов пассажиров
 CREATE TABLE Pass_in_trip (
-    passenger INT,
-    trip INT,
-    date DATE
+    passenger INT NOT NULL,
+    trip INT NOT NULL,
+    date DATE NOT NULL,
+    PRIMARY KEY (passenger, trip, date),
+    FOREIGN KEY (passenger) REFERENCES Passenger(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (trip) REFERENCES Trip(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- =========================
--- Пассажиры (футболисты)
+-- Пассажиры
 -- =========================
 INSERT INTO Passenger (id, name) VALUES
-(1, 'Jude Bellingham'),
-(2, 'Vinicius Junior'),
-(3, 'Rodrygo'),
-(4, 'Luka Modric'),
-(5, 'Toni Kroos'),
-(6, 'Federico Valverde'),
-(7, 'Eduardo Camavinga'),
-(8, 'Aurelien Tchouameni'),
-(9, 'Dani Carvajal'),
-(10, 'Thibaut Courtois'),
-(11, 'Kylian Mbappe');
+(1, 'Thibaut Courtois'),
+(2, 'Dani Carvajal'),
+(3, 'David Alaba'),
+(4, 'Éder Militão'),
+(5, 'Antonio Rüdiger'),
+(6, 'Ferland Mendy'),
+(7, 'Luka Modric'),
+(8, 'Toni Kroos'),
+(9, 'Eduardo Camavinga'),
+(10, 'Aurélien Tchouaméni'),
+(11, 'Vinícius Júnior'),
+(12, 'Kylian Mbappe');
 
 -- =========================
 -- Рейсы
@@ -62,7 +63,8 @@ INSERT INTO Pass_in_trip (passenger, trip, date) VALUES
 (8, 3, '2024-03-15'),
 (9, 1, '2024-03-20'),
 (10, 4, '2024-03-25'),
-(1, 2, '2024-04-01'),
-(2, 3, '2024-04-03'),
-(11, 1, '2024-04-05'),
-(11, 2, '2024-04-10');
+(11, 2, '2024-04-01'),
+(12, 5, '2024-04-02'),
+(1, 3, '2024-04-03'),
+(2, 5, '2024-04-05'),
+(3, 4, '2024-04-10');
