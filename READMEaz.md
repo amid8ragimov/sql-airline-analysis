@@ -52,7 +52,7 @@ Cədvəllərin bir-biri ilə əlaqəsi belədir:
 ---
 
 ## Sorğuların Nümunələri
-![Biznes sinif sərnişinləri](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/Biznes%20sinif%20s%C9%99rni%C5%9Finl%C9%99ri.png)
+![Biznes-sinif-sərnişinləri](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/Biznes%20sinif%20s%C9%99rni%C5%9Finl%C9%99ri.png)
 
 
 
