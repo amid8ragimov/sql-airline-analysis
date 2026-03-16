@@ -52,14 +52,8 @@ Cədvəllərin bir-biri ilə əlaqəsi belədir:
 ---
 
 ## Sorğuların Nümunələri
+![Biznes sinif sərnişinləri](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/Biznes%20sinif%20s%C9%99rni%C5%9Finl%C9%99ri.png)
 
-Bir neçə maraqlı sorğu yazdım ki, analitikanı göstərim:
-
-1. Hər sərnişinin uçuş sayı  
-2. Ən populyar təyinatlar  
-3. Müəyyən sərnişinin uçuş tarixçəsi (məsələn, Kylian Mbappe)  
-4. Ən bahalı 5 bilet  
-5. Biznes sinfində olan sərnişinlər  
 
 
 
