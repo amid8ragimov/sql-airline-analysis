@@ -44,7 +44,7 @@ Birləşdirilmiş açar `(passenger, trip, date)` eyni sərnişinin bir gün iç
 
 Cədvəllərin bir-biri ilə əlaqəsi belədir:  
 
-![Image alt](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/imagesER-diagram.png
+![ER-Diagram](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/imagesER-diagram.png)
 
 - Hər sərnişin bir neçə uçuşa sahib ola bilər  
 - Hər uçuş bir neçə sərnişinə malik ola bilər  
