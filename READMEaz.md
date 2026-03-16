@@ -44,12 +44,7 @@ Birləşdirilmiş açar `(passenger, trip, date)` eyni sərnişinin bir gün iç
 
 Cədvəllərin bir-biri ilə əlaqəsi belədir:  
 
-![ER-Diagram](images/ER-diagram.png)
-![Flights per Passenger](images/flights_per_passenger.png)
-![Popular Destinations](images/popular_destinations.png)
-![Mbappe Flight History](images/mbappe_flights.png)
-![Top Tickets](images/top_tickets.png)
-![Business Class](images/business_class.png)
+![Image alt](https://github.com
 
 - Hər sərnişin bir neçə uçuşa sahib ola bilər  
 - Hər uçuş bir neçə sərnişinə malik ola bilər  
