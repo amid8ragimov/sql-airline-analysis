@@ -52,7 +52,16 @@ Cədvəllərin bir-biri ilə əlaqəsi belədir:
 ---
 
 ## Sorğuların Nümunələri
+Biznes sinif sərnişinləri
 ![Biznes-sinif-sərnişinləri](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/Biznes%20sinif%20s%C9%99rni%C5%9Finl%C9%99ri.png)
+Hər sərnişinin uçuş sayı
+![Hər sərnişinin uçuş sayı](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/H%C9%99r%20s%C9%99rni%C5%9Finin%20u%C3%A7u%C5%9F%20say%C4%B1.png)
+Kylian Mbappe-nin uçuş tarixçəsi
+![Kylian Mbappe-nin uçuş tarixçəsi](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/Kylian%20Mbappe-nin%20u%C3%A7u%C5%9F%20tarix%C3%A7%C9%99si.png)
+Ən bahalı 5 bilet
+![Ən bahalı 5 bilet](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/%C6%8Fn%20bahal%C4%B1%205%20bilet.png)
+Ən populyar istiqamətlər
+![Ən populyar istiqamətlər](https://github.com/amid8ragimov/sql-airline-analysis/blob/main/%C6%8Fn%20populyar%20istiqam%C9%99tl%C9%99r.png)
 
 
 
